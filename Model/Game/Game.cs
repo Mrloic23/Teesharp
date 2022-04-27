@@ -2,21 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using Teeko.Exceptions;
+using Teeko.Teeko.Model.Game;
+
 namespace Teeko.Model.Game
 {
     public class Game
     {
         public bool IsOver => Board.IsOver();
         public Board Board { private set; get; }
-        private readonly Dictionary<string, Player> Players;
+        private readonly Player[] Players ;
 
         public Game()
         {
-            Board = new();
-            string name = "blue";
-            Players.Add(name, new(name, State.blue));
-            name = "red";
-            Players.Add(name, new(name, State.red));
+            Players = new Player[2] { new Player("blue", State.blue), new Player("red", State.red) };
+            Board = new(Players);
         }
         /// <summary>
         /// plays a turn
@@ -27,7 +26,7 @@ namespace Teeko.Model.Game
         {
             #region checks
             //Player check
-            if (!Players.Values.Contains(source))
+            if (!Players.Contains(source))
             {
                 throw new InvalidPlayerException("invalid source");
             }

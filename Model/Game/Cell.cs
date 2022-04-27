@@ -1,4 +1,4 @@
-﻿namespace Teeko
+﻿namespace Teeko.Model.Game
 {
     public struct Cell
     {
@@ -19,8 +19,8 @@
     public enum State : short
     {
         empty,
-        red,
-        blue
+        blue,
+        red
     }
     
 }

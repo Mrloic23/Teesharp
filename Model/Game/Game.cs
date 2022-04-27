@@ -54,10 +54,10 @@ namespace Teeko.Model.Game
                 throw new InvalidMoveException("distance between source and target is too great");
             }
             #endregion
-            Board.Cells[move.DestinationCell.x][move.DestinationCell.y].SetState(source.StateValue);
+            Board.Cells[move.DestinationCell.x, move.DestinationCell.y].SetState(source.StateValue);
             if (move.SourceCell.HasValue)
             {
-                Board.Cells[move.SourceCell.Value.x][move.SourceCell.Value.y].SetState(source.StateValue);
+                Board.Cells[move.SourceCell.Value.x, move.SourceCell.Value.y].SetState(source.StateValue);
             }
         }
 

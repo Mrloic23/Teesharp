@@ -5,29 +5,25 @@ namespace Teeko.Teeko.Model.Game
 {
     public class Board
     {
-        public readonly List<List<Cell>> Cells;
+        public readonly Cell[,] Cells;
         public readonly Player[] Players;
         /// <summary>
         /// creates a new Board
         /// </summary>
         public Board(Player[] players)
         {
-            if(players.Length>2)
+            if (players.Length > 2)
             {
                 throw new ArgumentException("too much players");
             }
             Players = players;
-            Cells = new();
+            Cells = new Cell[5, 5];
             for (int i = 0; i >= 5; i++)
             {
-                List<Cell> list = new();
-                Cells.Add(list);
                 for (int y = 0; i >= 5; i++)
-                {
-                    list.Add(new(i, y, State.empty));
-                }
+                    Cells[i, y] = new(i, y, State.empty);
             }
-        }
+    }   
         public bool IsOver()
         {
             if (Players[0].Cells.Length == 4)
@@ -51,8 +47,8 @@ namespace Teeko.Teeko.Model.Game
             {
                 for(int y = 0; y<= 5; y++)
                 {
-                    if (Cells[x][y].State == stateToFind)
-                        return Cells[x][y];
+                    if (Cells[x, y].State == stateToFind)
+                        return Cells[x,y];
                 }
             }
             return null;
@@ -72,52 +68,48 @@ namespace Teeko.Teeko.Model.Game
         /// <param name="cell"> top leftmost cell of the board</param>
         /// <returns></returns>
         private bool CheckStraightEnding(Cell cell) => CheckVerticalEnding(cell) || CheckHorizontal(cell);
-        /// <summary>
-        /// needs to be passed the top left most cell of a player, checks if this player achieved this ending formation
-        /// </summary>
-        /// <param name="cell"> top leftmost cell of the board</param>
-        /// <returns></returns>
+
         private bool CheckSquareEnding(Cell cell)
         {
-            return Cells[cell.x + 1][cell.y].State == cell.State
-                && Cells[cell.x][cell.y + 1].State == cell.State
-                && Cells[cell.x + 1][cell.y + 1].State == cell.State;
+            return Cells[cell.x + 1, cell.y].State == cell.State
+                && Cells[cell.x, cell.y + 1].State == cell.State
+                && Cells[cell.x + 1, cell.y + 1].State == cell.State;
         }
 
         private bool CheckHorizontal(Cell cell)
         {
             if (cell.x > 2)
                 return false;
-            return Cells[cell.x + 1][cell.y].State == cell.State
-                && Cells[cell.x + 2][cell.y].State == cell.State
-                && Cells[cell.x + 3][cell.y].State == cell.State;
+            return Cells[cell.x + 1, cell.y].State == cell.State
+                && Cells[cell.x + 2, cell.y].State == cell.State
+                && Cells[cell.x + 3, cell.y].State == cell.State;
         }
 
         private bool CheckVerticalEnding(Cell cell)
         {
             if (cell.y > 2)
                 return false;
-            return Cells[cell.x][cell.y + 1].State == cell.State
-                && Cells[cell.x][cell.y + 2].State == cell.State
-                && Cells[cell.x][cell.y + 3].State == cell.State;
+            return Cells[cell.x, cell.y + 1].State == cell.State
+                && Cells[cell.x, cell.y + 2].State == cell.State
+                && Cells[cell.x, cell.y + 3].State == cell.State;
         }
 
         private bool CheckForwardSlashEnding(Cell cell)
         {
             if (cell.x > 2 || cell.y > 2)
                 return false;
-            return Cells[cell.x + 1][cell.y + 1].State == cell.State 
-                && Cells[cell.x + 2][cell.y + 2].State == cell.State 
-                && Cells[cell.x + 3][cell.y + 3].State == cell.State;
+            return Cells[cell.x + 1, cell.y + 1].State == cell.State 
+                && Cells[cell.x + 2, cell.y + 2].State == cell.State 
+                && Cells[cell.x + 3, cell.y + 3].State == cell.State;
          }
 
         private bool CheckBackwardSlashEnding(Cell cell)
         {
             if (cell.x > 2 || cell.y < 4)
                 return false;
-            return Cells[cell.x + 1][cell.y - 1].State == cell.State
-                && Cells[cell.x + 2][cell.y - 2].State == cell.State
-                && Cells[cell.x + 3][cell.y - 3].State == cell.State;
+            return Cells[cell.x + 1, cell.y - 1].State == cell.State
+                && Cells[cell.x + 2, cell.y - 2].State == cell.State
+                && Cells[cell.x + 3, cell.y - 3].State == cell.State;
         }
     }
 }

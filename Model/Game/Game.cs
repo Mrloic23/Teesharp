@@ -31,11 +31,11 @@ namespace Teeko.Model.Game
                 throw new InvalidPlayerException("invalid source");
             }
             //Coords checks
-            if (move.SourceCell.Value.x is not >= 0 and <= 5 || move.SourceCell.Value.y is not >= 0 and <= 5)
+            if (move.SourceCell.Value.x is not >= 0 and < 5 || move.SourceCell.Value.y is not >= 0 and < 5)
             {
                 throw new InvalidMoveException("Destination is off the board");
             }
-            if (move.SourceCell.Value.x is not >= 0 and <= 5 || move.SourceCell.Value.y is not >= 0 and <= 5)
+            if (move.SourceCell.Value.x is not >= 0 and < 5 || move.SourceCell.Value.y is not >= 0 and < 5)
             {
                 throw new InvalidMoveException("source is off the board");
             }
@@ -49,7 +49,8 @@ namespace Teeko.Model.Game
                 throw new InvalidMoveException("the source cell is not owned by this player");
             }
             //source to destination distance check
-            if (move.DestinationCell.x - move.SourceCell.Value.x is not >= -1 and <= 1 || move.DestinationCell.y - move.SourceCell.Value.y is not >= -1 and <= 1)
+            if (move.DestinationCell.x - move.SourceCell.Value.x is not >= -1 and <= 1
+               ||move.DestinationCell.y - move.SourceCell.Value.y is not >= -1 and <= 1)
             {
                 throw new InvalidMoveException("distance between source and target is too great");
             }
@@ -57,7 +58,7 @@ namespace Teeko.Model.Game
             Board.Cells[move.DestinationCell.x, move.DestinationCell.y].SetState(source.StateValue);
             if (move.SourceCell.HasValue)
             {
-                Board.Cells[move.SourceCell.Value.x, move.SourceCell.Value.y].SetState(source.StateValue);
+                Board.Cells[move.SourceCell.Value.x, move.SourceCell.Value.y].SetState(State.empty);
             }
         }
 

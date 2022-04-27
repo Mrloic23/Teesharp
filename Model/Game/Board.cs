@@ -23,7 +23,7 @@ namespace Teeko.Teeko.Model.Game
                 for (int y = 0; i >= 5; i++)
                     Cells[i, y] = new(i, y, State.empty);
             }
-    }   
+        }
         public bool IsOver()
         {
             if (Players[0].Cells.Length == 4)
@@ -35,7 +35,6 @@ namespace Teeko.Teeko.Model.Game
             return false;
         }
 
-
         /// <summary>
         /// returns the first cell with that state (horizontal checks first)
         /// </summary>
@@ -43,17 +42,16 @@ namespace Teeko.Teeko.Model.Game
         /// <returns>first cell with that state (lowest X before lowest Y) or null</returns>
         private Cell? FindFirstCellOfState(State stateToFind)
         {
-            for (int x=0; x<=5;x++)
+            for (int x = 0; x <= 5; x++)
             {
-                for(int y = 0; y<= 5; y++)
+                for (int y = 0; y <= 5; y++)
                 {
                     if (Cells[x, y].State == stateToFind)
-                        return Cells[x,y];
+                        return Cells[x, y];
                 }
             }
             return null;
         }
-        
 
         /// <summary>
         /// needs to be passed the top left most cell of a player, checks if this player achieved this ending formation
@@ -78,7 +76,7 @@ namespace Teeko.Teeko.Model.Game
 
         private bool CheckHorizontal(Cell cell)
         {
-            if (cell.x > 2)
+            if (cell.x > 1)
                 return false;
             return Cells[cell.x + 1, cell.y].State == cell.State
                 && Cells[cell.x + 2, cell.y].State == cell.State
@@ -87,7 +85,7 @@ namespace Teeko.Teeko.Model.Game
 
         private bool CheckVerticalEnding(Cell cell)
         {
-            if (cell.y > 2)
+            if (cell.y > 1)
                 return false;
             return Cells[cell.x, cell.y + 1].State == cell.State
                 && Cells[cell.x, cell.y + 2].State == cell.State
@@ -96,16 +94,16 @@ namespace Teeko.Teeko.Model.Game
 
         private bool CheckForwardSlashEnding(Cell cell)
         {
-            if (cell.x > 2 || cell.y > 2)
+            if (cell.x > 1 || cell.y > 1)
                 return false;
             return Cells[cell.x + 1, cell.y + 1].State == cell.State 
                 && Cells[cell.x + 2, cell.y + 2].State == cell.State 
                 && Cells[cell.x + 3, cell.y + 3].State == cell.State;
-         }
+        }
 
         private bool CheckBackwardSlashEnding(Cell cell)
         {
-            if (cell.x > 2 || cell.y < 4)
+            if (cell.x > 1 || cell.y < 3)
                 return false;
             return Cells[cell.x + 1, cell.y - 1].State == cell.State
                 && Cells[cell.x + 2, cell.y - 2].State == cell.State
